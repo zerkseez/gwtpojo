@@ -86,27 +86,35 @@ To share pojo classes between client and server, it is highly recommended to put
 ```
 
 ### Java code
-GWTPojo will generate a serializer class for each class annotated with `@GWTPojo` in the model jar. The serializer classes will be generated under the same package as the corresponding pojo classes. For example, the serializer for `com.mycompany.model.SamplePojo` will be `com.mycompany.model.SamplePojoSerializer`.
+GWTPojo will generate a serializer class for each class annotated with `@GWTPojo` from the model jar. The serializer classes will be generated under the same package as the corresponding pojo classes. For example, the serializer for `com.mycompany.model.SamplePojo` will be `com.mycompany.model.SamplePojoSerializer`.
 
-Decorating your pojo class in your model jar with `@GWTPojo`:
+#### Decorating your pojo class in your model jar with `@GWTPojo`
 ```java
 @GWTPojo
 public class SamplePojo {
-   ...
+   // Declare your class members here
 }
 ```
 
-Serializing your pojo in your client:
+#### Serializing your pojo in your client
 ```java
 SamplePojoSerializer samplePojoSerializer = new SamplePojoSerializer();
 JSONValue json = samplePojoSerializer.serialize(samplePojo);
 String jsonString = json.toString();
+
+// To serialize List<SamplePojo>
+ListSerializer<SamplePojo> listSerializer = new ListSerializer<SamplePojo>(samplePojoSerializer);
+JSONValue jsonArray = listSerializer.serialize(listOfSamplePojo);
 ```
 
-Deserializing your pojo in your client:
+#### Deserializing your pojo in your client
 ```java
 SamplePojoSerializer samplePojoSerializer = new SamplePojoSerializer();
 SamplePojo pojo = samplePojoSerializer.deserialize(json);
+
+// To deserialize an array of SamplePojo into List<SamplePojo>
+ListSerializer<SamplePojo> listSerializer = new ListSerializer<SamplePojo>(samplePojoSerializer);
+List<SamplePojo> listOfSamplePojo = listSerializer.deserialize(jsonArray);
 ```
 
 ### Sample project

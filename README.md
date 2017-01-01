@@ -18,7 +18,6 @@ To share pojo classes between client and server, it is highly recommended to put
 ### pom.xml of your client
 ```xml
 <project>
-
     <build>
         <plugins>
             <plugin>
